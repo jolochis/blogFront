@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { searchPosts } from "../../services/postService";
+import { SearchContext } from "../../context/searchContext";
 
 export const SearchPost = () => {
   const [searchTerm, setsearchTerm] = useState("");
   const [postFound, setpostFound] = useState([]);
+
+  const context = useContext(SearchContext);
+
+  const { searchResults, setSearchResults } = context;
 
   const handleSearch = async (e: string) => {
     setsearchTerm(e);
@@ -13,13 +18,11 @@ export const SearchPost = () => {
     (() => {
       setTimeout(async () => {
         const results = await searchPosts(searchTerm);
-        setpostFound(results);
-      }, 500);
+        setSearchResults(results);
+      }, 300);
     })();
   }, [searchTerm]);
 
-  console.log(postFound);
-  console.log(searchTerm);
   return (
     <div className="flex px-4 py-3 rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif]">
       <svg

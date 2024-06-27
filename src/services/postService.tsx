@@ -19,7 +19,7 @@ const getPost = async (id: number) => {
     return error;
   }
 };
-const createPost = async (data: []) => {
+const createPost = async (data) => {
   try {
     const post = await axios.post(`${url}/entrada`, data);
     return post;
@@ -49,7 +49,6 @@ const updatePost = async (id: number, data: []) => {
 
 const searchPosts = async (searchTerm: string) => {
   try {
-    console.log(`${url}/busqueda?q=${searchTerm}`);
     const post = await axios.get(`${url}/busqueda?q=${searchTerm}`);
     return post.data;
   } catch (error) {
