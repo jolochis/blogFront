@@ -3,13 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { getPost } from "../services/postService";
 
-export const PostDetail = ({
-  item,
-  handleOpenModal,
-  isModalOpen,
-  handleCloseModal,
-  handleDelete,
-}) => {
+export const PostDetail = ({}) => {
   const [postDetails, setPostDetails] = useState([]);
   const { postId } = useParams();
 
