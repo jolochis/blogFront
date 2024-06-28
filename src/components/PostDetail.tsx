@@ -26,6 +26,9 @@ export const PostDetail = ({
         {postDetails?.titulo}
       </h1>
 
+      <p className="text-xl text-gray-800 p-2 m-2">
+        <span className="font-bold">Por:</span> {postDetails?.autor}
+      </p>
       <p className="text-xl text-gray-800 p-2 m-2">{postDetails?.contenido}</p>
 
       <p className="text-xl text-gray-800 mt-auto mb-4">

@@ -37,6 +37,9 @@ export const PostList = () => {
     };
     fetchPosts();
   }, []);
+  useEffect(() => {
+    setPost(searchResults);
+  }, [searchResults]);
   return (
     <div>
       <div className="container mx-auto px-5 py-4 flex justify-center">
@@ -54,43 +57,53 @@ export const PostList = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {post.map((item) => (
                 <div
-                  className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col text-center mb-8 py-4"
+                  className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col text-center mb-8"
                   key={item.id}
                 >
-                  <h1 className="text-2xl font-medium title-font mb-4 text-gray-900">
-                    {item.titulo}
-                  </h1>
-
-                  {item.contenido.length > 70 ? (
-                    <p className="text-xl text-gray-800 px-6">
-                      {`${item.contenido.substring(0, 70)}...`}
+                  <div className="p-6">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                      {item.titulo}
+                    </h1>
+                    <p className="text-xl text-gray-800 mb-2">
+                      <span className="font-semibold">Por:</span> {item.autor}
                     </p>
-                  ) : (
-                    <p className="text-xl text-gray-800">{item.contenido}</p>
-                  )}
 
-                  <p className="text-xl text-gray-800 mt-auto mb-4">
-                    <span className="font-bold">Añadido: </span>
-                    {moment(item.fecha).format("LL")}
-                  </p>
-                  <div className="flex justify-center items-center mt-auto">
-                    <Link
-                      to={`/post/${item.id}`}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2"
-                    >
-                      Ver
-                    </Link>
-                    <button
-                      onClick={() => handleOpenModal(item.id)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
-                    >
-                      Eliminar
-                    </button>
-                    <Modal
-                      isOpen={isModalOpen}
-                      closeModal={handleCloseModal}
-                      handleDelete={handleDelete}
-                    />
+                    {item.contenido.length > 70 ? (
+                      <p className="text-lg text-gray-800 mb-4">{`${item.contenido.substring(
+                        0,
+                        70
+                      )}...`}</p>
+                    ) : (
+                      <p className="text-lg text-gray-800 mb-4">
+                        {item.contenido}
+                      </p>
+                    )}
+
+                    <p className="text-lg text-gray-800">
+                      <span className="font-semibold">Añadido:</span>{" "}
+                      {moment(item.fecha).format("LL")}
+                    </p>
+                  </div>
+                  <div className="mt-auto p-4 bg-gray-100">
+                    <div className="flex justify-center">
+                      <Link
+                        to={`/post/${item.id}`}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full mr-2"
+                      >
+                        Ver
+                      </Link>
+                      <button
+                        onClick={() => handleOpenModal(item.id)}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full"
+                      >
+                        Eliminar
+                      </button>
+                      <Modal
+                        isOpen={isModalOpen}
+                        closeModal={handleCloseModal}
+                        handleDelete={handleDelete}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}

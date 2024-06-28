@@ -1,13 +1,18 @@
-import { Link } from "react-router-dom";
-import { createPost } from "../services/postService";
+import { Link, useParams } from "react-router-dom";
+import { createPost, getPost, updatePost } from "../services/postService";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export const CreatePost = () => {
+  const { postId } = useParams<{ postId: string }>();
+  const parsedPostId = parseInt(postId, 10);
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
   const [contenido, setContenido] = useState("");
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const text = postId ? "Editar" : "Crear";
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,15 +25,61 @@ export const CreatePost = () => {
         contenido,
         fecha: date,
       };
-      await createPost(data);
-      navigate("/");
+      if (postId) {
+        await updatePost(parsedPostId, data);
+
+        toast.info("Entrada editada exitosamente", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        await createPost(data);
+        toast.success("Entrada creada exitosamente", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
-      console.error("Error al enviar la entrada:", error);
+      toast.success("Error al enviar la entrada:", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
+  useEffect(() => {
+    if (postId) {
+      const fetchPost = async () => {
+        const post = await getPost(parsedPostId);
+        setTitulo(post.titulo);
+        setAutor(post.autor);
+        setContenido(post.contenido);
+      };
+      fetchPost();
+    }
+  }, [postId]);
+
   return (
     <div className="flex flex-col w-full max-w-sm mx-auto py-2">
+      <ToastContainer />
       <form
         onSubmit={handleSubmit}
         className="flex flex-col w-full max-w-sm mx-auto py-2"
@@ -87,7 +138,7 @@ export const CreatePost = () => {
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mb-3"
         >
-          Crear Entrada
+          {text} Entrada
         </button>
       </form>
       <div className="flex justify-center">

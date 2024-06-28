@@ -16,6 +16,7 @@ function App() {
             <Route path="/" element={<PostList />} />
             <Route path="/post/:postId" element={<PostDetail />} />
             <Route path="/crear-entrada" element={<CreatePost />} />
+            <Route path="/editar/:postId" element={<CreatePost />} />
           </Routes>
         </SearchProvider>
       </div>

@@ -37,9 +37,9 @@ const deletePost = async (id: number) => {
     return error;
   }
 };
-const updatePost = async (id: number, data: []) => {
+const updatePost = async (id: number, data) => {
   try {
-    const post = await axios.put(`${url}entrada/${id}`, data);
+    const post = await axios.put(`${url}/entrada/${id}`, data);
     return post;
   } catch (error) {
     console.log(error);
