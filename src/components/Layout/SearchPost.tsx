@@ -19,7 +19,7 @@ export const SearchPost = () => {
         setSearchResults(results);
       }, 300);
     })();
-  }, [searchTerm]);
+  }, [searchTerm, setSearchResults]);
 
   return (
     <div className="flex px-4 py-3 rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif]">
