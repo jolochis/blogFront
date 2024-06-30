@@ -4,26 +4,29 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { EntradaInterface } from "./interface/EntradaInterface";
+
 export const CreatePost = () => {
   const { postId } = useParams<{ postId: string }>();
-  const parsedPostId = parseInt(postId, 10);
+  const parsedPostId = parseInt(postId as string, 10);
+
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
   const [contenido, setContenido] = useState("");
 
   const navigate = useNavigate();
   const text = postId ? "Editar" : "Crear";
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
       const date = new Date().toISOString();
       if (!titulo || !autor || !contenido) return;
 
-      const data = {
+      const data: EntradaInterface = {
         titulo,
         autor,
         contenido,
-        fecha: date,
+        fecha: new Date(date),
       };
       if (postId) {
         await updatePost(parsedPostId, data);

@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { searchPosts } from "../../services/postService";
 import { SearchContext } from "../../context/searchContext";
 
 export const SearchPost = () => {
   const [searchTerm, setsearchTerm] = useState("");
-  const [postFound, setpostFound] = useState([]);
-
   const context = useContext(SearchContext);
 
-  const { searchResults, setSearchResults } = context;
+  const { setSearchResults } = context;
 
   const handleSearch = async (e: string) => {
     setsearchTerm(e);

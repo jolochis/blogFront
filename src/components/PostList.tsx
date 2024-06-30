@@ -4,22 +4,23 @@ import { SearchContext } from "../context/searchContext";
 import { Modal } from "./commons/Modal";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { EntradaInterface } from "./interface/EntradaInterface";
 
 export const PostList = () => {
-  const [post, setPost] = useState([] as any[]);
+  const [post, setPost] = useState<EntradaInterface[]>([]);
   const context = useContext(SearchContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(Number);
   const { searchResults } = context;
 
-  const handleOpenModal = (id) => {
+  const handleOpenModal = (id: number) => {
     setItemToDelete(id);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setItemToDelete(null);
+    setItemToDelete(0);
   };
 
   const handleDelete = async () => {
@@ -93,7 +94,7 @@ export const PostList = () => {
                         Ver
                       </Link>
                       <button
-                        onClick={() => handleOpenModal(item.id)}
+                        onClick={() => handleOpenModal(item?.id ?? -1)}
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full"
                       >
                         Eliminar

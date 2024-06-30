@@ -1,6 +1,13 @@
-import React from "react";
-
-export const Modal = ({ isOpen, closeModal, handleDelete }) => {
+interface ModalProps {
+  isOpen: boolean;
+  closeModal: () => void;
+  handleDelete: () => void;
+}
+export const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  closeModal,
+  handleDelete,
+}) => {
   if (!isOpen) return null;
 
   const handleConfirmDelete = () => {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { EntradaInterface } from "../components/interface/EntradaInterface";
 
 const url = "http://localhost:3000";
 const getPosts = async () => {
@@ -19,7 +20,7 @@ const getPost = async (id: number) => {
     return error;
   }
 };
-const createPost = async (data) => {
+const createPost = async (data: EntradaInterface) => {
   try {
     const post = await axios.post(`${url}/entrada`, data);
     return post;
@@ -37,7 +38,7 @@ const deletePost = async (id: number) => {
     return error;
   }
 };
-const updatePost = async (id: number, data) => {
+const updatePost = async (id: number, data: EntradaInterface) => {
   try {
     const post = await axios.put(`${url}/entrada/${id}`, data);
     return post;
