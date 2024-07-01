@@ -7,17 +7,17 @@ Aplicacion creada con vite, typescript y tailwind
 instalar modulos
 
 ```
-$ npm i
+$ docker build -t blogfront .  
 ```
 
 Ejecutar aplicación
 
 ```
-$ npm run dev
+$ docker run -p 5173:5173 --name blogfront blogfront
 ```
 
-docker build -t blogfront .  
-docker run -p 5173:5173 --name blogfront blogfront
+
+
 
 ## Repositorio de diagramas
 
