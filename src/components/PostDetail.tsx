@@ -5,7 +5,7 @@ import { getPost } from "../services/postService";
 import { EntradaInterface } from "./interface/EntradaInterface";
 
 export const PostDetail = () => {
-  const [postDetails, setPostDetails] = useState<EntradaInterface[]>([]);
+  const [postDetails, setPostDetails] = useState<EntradaInterface>();
   const { postId } = useParams<{ postId: string }>();
   const parsedPostId = parseInt(postId as string, 10);
 
@@ -19,23 +19,23 @@ export const PostDetail = () => {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col text-center mb-8 py-4">
       <h1 className="text-2xl font-medium title-font mb-4 text-gray-900">
-        {postDetails[0]?.titulo}
+        {postDetails?.titulo}
       </h1>
 
       <p className="text-xl text-gray-800 p-2 m-2">
-        <span className="font-bold">Por:</span> {postDetails[0]?.autor}
+        <span className="font-bold">Por:</span> {postDetails?.autor}
       </p>
       <p className="text-xl text-gray-800 p-2 m-2">
-        {postDetails[0]?.contenido}
+        {postDetails?.contenido}
       </p>
 
       <p className="text-xl text-gray-800 mt-auto mb-4">
-        {moment(postDetails[0]?.fecha).format("LL")}
+        {moment(postDetails?.fecha).format("LL")}
       </p>
 
       <div className="flex justify-center items-center mt-auto">
         <Link
-          to={`/editar/${postDetails[0]?.id}`}
+          to={`/editar/${postDetails?.id}`}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mr-2"
         >
           Editar
